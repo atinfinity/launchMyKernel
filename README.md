@@ -36,7 +36,7 @@ GpuMatを受け取って自作CUDAカーネルを実行するサンプルです。
   <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 7.0.targets" />
 </ImportGroup>
 ```
-お手持ちのCUDA Toolkitのバージョンに合わせて書き換える必要があります。
+お手持ちのCUDA Toolkitのバージョンに合わせて書き換える必要があります。<br>
 ※例えば、CUDA 7.5の場合は<code>CUDA 7.5.targets</code>をインポートする必要があります。
 
 また、同梱のプロジェクトファイル(launchMyKernel.vcxproj)ではコード生成を以下のように設定しています。
@@ -47,5 +47,5 @@ GpuMatを受け取って自作CUDAカーネルを実行するサンプルです。
 </CudaCompile>
 ```
 
-もし、動作させるGPUが古い場合は適切なCompute Capabilityを指定する必要があります。
+もし、動作させるGPUが古い場合は適切なCompute Capabilityを指定する必要があります。<br>
 ※Compute Capabilityは[NVIDIAサイト](https://developer.nvidia.com/cuda-gpus)で確認することができます。
