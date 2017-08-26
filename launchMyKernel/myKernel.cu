@@ -10,7 +10,7 @@ __global__ void myKernel(const cv::cudev::GlobPtrSz<uchar> src, cv::cudev::GlobP
     const int x = blockDim.x * blockIdx.x + threadIdx.x;
     const int y = blockDim.y * blockIdx.y + threadIdx.y;
     if((x < dst.cols) && (y < dst.rows)){
-        dst.data[y*src.step + x] = UCHAR_MAX - src.data[y*src.step + x];
+        dst.ptr(y)[x] = UCHAR_MAX - src.ptr(y)[x];
     }
 }
 
