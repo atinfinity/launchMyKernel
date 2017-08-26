@@ -4,7 +4,7 @@
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 
-// ‰æ‘f’l‚ğƒlƒKƒ|ƒW”½“]‚³‚¹‚é‚¾‚¯‚ÌCUDAƒJ[ƒlƒ‹
+// ç”»ç´ å€¤ã‚’ãƒã‚¬ãƒã‚¸åè»¢ã•ã›ã‚‹ã ã‘ã®CUDAã‚«ãƒ¼ãƒãƒ«
 __global__ void myKernel(const cv::cudev::GlobPtrSz<uchar> src, cv::cudev::GlobPtrSz<uchar> dst)
 {
     const int x = blockDim.x * blockIdx.x + threadIdx.x;
@@ -16,17 +16,11 @@ __global__ void myKernel(const cv::cudev::GlobPtrSz<uchar> src, cv::cudev::GlobP
 
 void launchMyKernel(cv::cuda::GpuMat &src, cv::cuda::GpuMat &dst)
 {
-    cv::cudev::GlobPtrSz<uchar> pSrc =
-        cv::cudev::globPtr(src.ptr<uchar>(), src.step, src.rows, src.cols * src.channels());
-
-    cv::cudev::GlobPtrSz<uchar> pDst =
-        cv::cudev::globPtr(dst.ptr<uchar>(), dst.step, dst.rows, dst.cols * dst.channels());
-
     const dim3 block(32, 8);
     const dim3 grid(cv::cudev::divUp(src.cols, block.x), cv::cudev::divUp(src.rows, block.y));
 
-    // ©ìCUDAƒJ[ƒlƒ‹‚ğŒÄ‚Ño‚·
-    myKernel<<<grid, block>>>(pSrc, pDst);
+    // è‡ªä½œCUDAã‚«ãƒ¼ãƒãƒ«ã‚’å‘¼ã³å‡ºã™
+    myKernel<<<grid, block>>>(src, dst);
 
     CV_CUDEV_SAFE_CALL(cudaGetLastError());
     CV_CUDEV_SAFE_CALL(cudaDeviceSynchronize());
